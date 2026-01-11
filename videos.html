@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مكتبة الفيديوهات - موقع الشيخ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <a href="index.html" class="brand"><span class="brand__logo">ش</span><span class="brand__text">موقع الشيخ</span></a>
+      <label class="search"><svg class="icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg><input type="search" placeholder="ابحث في الموقع" id="globalSearch" /></label>
+    </div>
+    <nav class="topbar__center">
+      <a href="index.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a>
+      <a href="videos.html" class="tab active"><svg class="icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-1.1-.9-2-2-2H5C3.9 5 3 5.9 3 7v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-3.5l4 4v-11l-4 4z"/></svg></a>
+      <a href="articles.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></a>
+      <a href="about.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M11 7a2 2 0 1 1 2 2 2 2 0 0 1-2-2zm1 4c-3.31 0-6 2.69-6 6h2a4 4 0 0 1 8 0h2c0-3.31-2.69-6-6-6z"/></svg></a>
+      <a href="contact.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v16l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></a>
+    </nav>
+    <div class="topbar__right">
+      <button class="circle" id="themeToggle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c5 0 9-4 9-9 0-.7-.08-1.38-.24-2.03A7 7 0 0 1 12 3z"/></svg></button>
+      <a href="login.html" class="btn primary" id="loginBtn" style="display: none;">تسجيل الدخول</a>
+      <div class="user-menu" id="userMenu" style="display: none;">
+        <button class="circle profile user-menu-btn"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' rx='40' fill='%231a3a30'/><circle cx='40' cy='35' r='16' fill='%23ffe7c7'/><rect x='24' y='44' width='32' height='16' rx='8' fill='%2326150e'/><path d='M24 28 q16-18 32 0' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round'/></svg>" alt="" /></button>
+        <div class="user-menu-dropdown"><span class="user-name"></span><a href="admin.html" id="adminLink" style="display: none;">لوحة التحكم</a><button id="logoutBtn">تسجيل الخروج</button></div>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;">
+    <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 32px;">مكتبة الفيديوهات</h1>
+    
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="ابحث في الفيديوهات..." class="form-input" />
+      <select id="categoryFilter" class="form-select">
+        <option value="">كل التصنيفات</option>
+        <option value="عبادات">عبادات</option>
+        <option value="أخلاق">أخلاق</option>
+        <option value="عقيدة">عقيدة</option>
+      </select>
+      <select id="sortFilter" class="form-select">
+        <option value="newest">الأحدث</option>
+        <option value="most-viewed">الأكثر مشاهدة</option>
+      </select>
+    </div>
+    
+    <div class="videos-grid" id="videosGrid"></div>
+    
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section"><h3>عن الموقع</h3><p>موقع دعوي يهدف إلى نشر العلم النافع والمحتوى الإسلامي الهادف</p></div>
+      <div class="footer-section"><h3>روابط سريعة</h3><a href="index.html">الرئيسية</a><a href="articles.html">المقالات</a><a href="videos.html">الفيديوهات</a><a href="about.html">من نحن</a><a href="contact.html">تواصل معنا</a></div>
+      <div class="footer-section"><h3>تواصل معنا</h3><p>البريد الإلكتروني: info@example.com</p><p>الهاتف: +1234567890</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2024 موقع الشيخ. جميع الحقوق محفوظة.</p></div>
+  </footer>
+
+  <button id="backToTop"><svg class="icon" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg></button>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/shared.js"></script>
+  <script>
+    let currentPage = 1;
+    const perPage = 9;
+    
+    function loadVideos() {
+      let videos = DataManager.getVideos();
+      const searchQuery = document.getElementById('searchInput').value;
+      const category = document.getElementById('categoryFilter').value;
+      const sort = document.getElementById('sortFilter').value;
+      
+      if (searchQuery) videos = Utils.search(videos, searchQuery, ['title', 'description']);
+      if (category) videos = videos.filter(v => v.category === category);
+      
+      if (sort === 'most-viewed') {
+        videos.sort((a, b) => (b.views || 0) - (a.views || 0));
+      } else {
+        videos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      }
+      
+      const paginated = Utils.paginate(videos, currentPage, perPage);
+      
+      document.getElementById('videosGrid').innerHTML = paginated.data.map(video => `
+        <a href="video.html?id=${video.id}" class="video-card">
+          <div class="video-card-thumbnail">
+            <img src="${video.thumbnail}" alt="${video.title}" />
+            <div class="video-card-play"><svg class="video-card-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <div class="video-card-content">
+            <h3 class="video-card-title">${video.title}</h3>
+            <div class="video-card-meta">
+              <span>${Utils.formatDate(video.createdAt)}</span>
+              <span>${Utils.formatNumber(video.views)} مشاهدة</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+      
+      const paginationContainer = document.getElementById('pagination');
+      if (paginated.totalPages > 1) {
+        let html = '';
+        if (currentPage > 1) html += `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})">السابق</button>`;
+        for (let i = 1; i <= paginated.totalPages; i++) {
+          if (i === 1 || i === paginated.totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+            html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+          }
+        }
+        if (currentPage < paginated.totalPages) html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})">التالي</button>`;
+        paginationContainer.innerHTML = html;
+      } else paginationContainer.innerHTML = '';
+    }
+    
+    function goToPage(page) {
+      currentPage = page;
+      loadVideos();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      loadVideos();
+      document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; loadVideos(); });
+      document.getElementById('categoryFilter').addEventListener('change', () => { currentPage = 1; loadVideos(); });
+      document.getElementById('sortFilter').addEventListener('change', () => { currentPage = 1; loadVideos(); });
+      if (typeof Auth !== 'undefined') {
+        Auth.checkAuthState();
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) logoutBtn.addEventListener('click', () => Auth.logout());
+        const adminLink = document.getElementById('adminLink');
+        if (adminLink && Auth.isAdmin()) adminLink.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
+

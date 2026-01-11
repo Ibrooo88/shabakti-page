@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول - موقع الشيخ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <a href="index.html" class="brand"><span class="brand__logo">ش</span><span class="brand__text">موقع الشيخ</span></a>
+    </div>
+    <div class="topbar__right">
+      <button class="circle" id="themeToggle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c5 0 9-4 9-9 0-.7-.08-1.38-.24-2.03A7 7 0 0 1 12 3z"/></svg></button>
+    </div>
+  </header>
+
+  <div class="auth-page">
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1 class="auth-title">تسجيل الدخول</h1>
+        <p class="auth-subtitle">مرحباً بعودتك</p>
+      </div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" id="loginEmail" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">كلمة المرور</label>
+          <input type="password" class="form-input" id="loginPassword" required />
+        </div>
+        <button type="submit" class="btn primary" style="width: 100%; margin-top: 8px;">تسجيل الدخول</button>
+      </form>
+      
+      <div class="auth-footer">
+        <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/shared.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // إذا كان المستخدم مسجلاً بالفعل، إعادة توجيهه
+      if (typeof Auth !== 'undefined' && Auth.isAuthenticated()) {
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        const result = Auth.login(email, password);
+        if (result.success) {
+          Utils.showMessage('تم تسجيل الدخول بنجاح!', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1000);
+        } else {
+          Utils.showMessage(result.message || 'فشل تسجيل الدخول', 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

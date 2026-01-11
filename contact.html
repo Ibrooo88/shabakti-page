@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تواصل معنا - موقع الشيخ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <a href="index.html" class="brand"><span class="brand__logo">ش</span><span class="brand__text">موقع الشيخ</span></a>
+      <label class="search"><svg class="icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg><input type="search" placeholder="ابحث في الموقع" id="globalSearch" /></label>
+    </div>
+    <nav class="topbar__center">
+      <a href="index.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a>
+      <a href="videos.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-1.1-.9-2-2-2H5C3.9 5 3 5.9 3 7v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-3.5l4 4v-11l-4 4z"/></svg></a>
+      <a href="articles.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></a>
+      <a href="about.html" class="tab"><svg class="icon" viewBox="0 0 24 24"><path d="M11 7a2 2 0 1 1 2 2 2 2 0 0 1-2-2zm1 4c-3.31 0-6 2.69-6 6h2a4 4 0 0 1 8 0h2c0-3.31-2.69-6-6-6z"/></svg></a>
+      <a href="contact.html" class="tab active"><svg class="icon" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v16l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg></a>
+    </nav>
+    <div class="topbar__right">
+      <button class="circle" id="themeToggle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c5 0 9-4 9-9 0-.7-.08-1.38-.24-2.03A7 7 0 0 1 12 3z"/></svg></button>
+      <a href="login.html" class="btn primary" id="loginBtn" style="display: none;">تسجيل الدخول</a>
+      <div class="user-menu" id="userMenu" style="display: none;">
+        <button class="circle profile user-menu-btn"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' rx='40' fill='%231a3a30'/><circle cx='40' cy='35' r='16' fill='%23ffe7c7'/><rect x='24' y='44' width='32' height='16' rx='8' fill='%2326150e'/><path d='M24 28 q16-18 32 0' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round'/></svg>" alt="" /></button>
+        <div class="user-menu-dropdown"><span class="user-name"></span><a href="admin.html" id="adminLink" style="display: none;">لوحة التحكم</a><button id="logoutBtn">تسجيل الخروج</button></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="contact-page">
+      <h1 style="font-size: 36px; font-weight: 700; margin: 0 0 48px;">تواصل معنا</h1>
+      
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <h3>البريد الإلكتروني</h3>
+          <a href="mailto:info@example.com">info@example.com</a>
+        </div>
+        <div class="contact-info-item">
+          <h3>الهاتف</h3>
+          <a href="tel:+1234567890">+1234567890</a>
+        </div>
+        <div class="contact-info-item">
+          <h3>واتساب</h3>
+          <a href="https://wa.me/1234567890" target="_blank">+1234567890</a>
+        </div>
+        <div class="contact-info-item">
+          <h3>فيسبوك</h3>
+          <a href="#" target="_blank">صفحتنا على فيسبوك</a>
+        </div>
+      </div>
+
+      <div class="contact-form-container">
+        <h2 style="font-size: 24px; margin: 0 0 24px; font-weight: 700;">أرسل لنا رسالة</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <label class="form-label">الاسم</label>
+            <input type="text" class="form-input" id="contactName" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">البريد الإلكتروني</label>
+            <input type="email" class="form-input" id="contactEmail" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">الموضوع</label>
+            <input type="text" class="form-input" id="contactSubject" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">الرسالة</label>
+            <textarea class="form-textarea" id="contactMessage" required></textarea>
+          </div>
+          <button type="submit" class="btn primary">إرسال الرسالة</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section"><h3>عن الموقع</h3><p>موقع دعوي يهدف إلى نشر العلم النافع والمحتوى الإسلامي الهادف</p></div>
+      <div class="footer-section"><h3>روابط سريعة</h3><a href="index.html">الرئيسية</a><a href="articles.html">المقالات</a><a href="videos.html">الفيديوهات</a><a href="about.html">من نحن</a><a href="contact.html">تواصل معنا</a></div>
+      <div class="footer-section"><h3>تواصل معنا</h3><p>البريد الإلكتروني: info@example.com</p><p>الهاتف: +1234567890</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2024 موقع الشيخ. جميع الحقوق محفوظة.</p></div>
+  </footer>
+
+  <button id="backToTop"><svg class="icon" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5H7z"/></svg></button>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/shared.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      // حفظ الرسالة في localStorage (يمكن إرسالها لاحقاً لخادم)
+      const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      messages.push({ name, email, subject, message, date: new Date().toISOString() });
+      localStorage.setItem('contactMessages', JSON.stringify(messages));
+      
+      Utils.showMessage('تم إرسال رسالتك بنجاح. شكراً لتواصلك معنا!', 'success');
+      document.getElementById('contactForm').reset();
+    });
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Auth !== 'undefined') {
+        Auth.checkAuthState();
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) logoutBtn.addEventListener('click', () => Auth.logout());
+        const adminLink = document.getElementById('adminLink');
+        if (adminLink && Auth.isAdmin()) adminLink.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
+

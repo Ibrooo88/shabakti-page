@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لوحة التحكم - موقع الشيخ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <a href="index.html" class="brand"><span class="brand__logo">ش</span><span class="brand__text">لوحة التحكم</span></a>
+    </div>
+    <div class="topbar__right">
+      <button class="circle" id="themeToggle"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c5 0 9-4 9-9 0-.7-.08-1.38-.24-2.03A7 7 0 0 1 12 3z"/></svg></button>
+      <a href="index.html" class="btn">العودة للموقع</a>
+      <div class="user-menu" id="userMenu">
+        <button class="circle profile user-menu-btn"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' rx='40' fill='%231a3a30'/><circle cx='40' cy='35' r='16' fill='%23ffe7c7'/><rect x='24' y='44' width='32' height='16' rx='8' fill='%2326150e'/><path d='M24 28 q16-18 32 0' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round'/></svg>" alt="" /></button>
+        <div class="user-menu-dropdown"><span class="user-name"></span><button id="logoutBtn">تسجيل الخروج</button></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">لوحة التحكم</h1>
+    </div>
+    
+    <nav class="dashboard-nav">
+      <a href="#stats" class="active" data-section="stats">الإحصائيات</a>
+      <a href="#articles" data-section="articles">المقالات</a>
+      <a href="#videos" data-section="videos">الفيديوهات</a>
+      <a href="#messages" data-section="messages">الرسائل</a>
+    </nav>
+    
+    <!-- Stats Section -->
+    <section id="stats-section" class="dashboard-section">
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3 class="dashboard-card-title">عدد المقالات</h3>
+          <p class="dashboard-card-value" id="articlesCount">0</p>
+        </div>
+        <div class="dashboard-card">
+          <h3 class="dashboard-card-title">عدد الفيديوهات</h3>
+          <p class="dashboard-card-value" id="videosCount">0</p>
+        </div>
+        <div class="dashboard-card">
+          <h3 class="dashboard-card-title">عدد المستخدمين</h3>
+          <p class="dashboard-card-value" id="usersCount">0</p>
+        </div>
+        <div class="dashboard-card">
+          <h3 class="dashboard-card-title">عدد الرسائل</h3>
+          <p class="dashboard-card-value" id="messagesCount">0</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Articles Section -->
+    <section id="articles-section" class="dashboard-section" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="font-size: 24px; font-weight: 700; margin: 0;">إدارة المقالات</h2>
+        <button class="btn primary" id="addArticleBtn">إضافة مقال جديد</button>
+      </div>
+      <div id="articlesList"></div>
+    </section>
+    
+    <!-- Videos Section -->
+    <section id="videos-section" class="dashboard-section" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="font-size: 24px; font-weight: 700; margin: 0;">إدارة الفيديوهات</h2>
+        <button class="btn primary" id="addVideoBtn">إضافة فيديو جديد</button>
+      </div>
+      <div id="videosList"></div>
+    </section>
+    
+    <!-- Messages Section -->
+    <section id="messages-section" class="dashboard-section" style="display: none;">
+      <h2 style="font-size: 24px; font-weight: 700; margin: 0 0 24px;">رسائل التواصل</h2>
+      <div id="messagesList"></div>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/shared.js"></script>
+  <script>
+    // التحقق من الصلاحيات
+    if (typeof Auth === 'undefined' || !Auth.isAdmin()) {
+      window.location.href = 'index.html';
+    }
+    
+    function loadStats() {
+      const articles = DataManager.getArticles();
+      const videos = DataManager.getVideos();
+      const users = Auth.getUsers();
+      const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      
+      document.getElementById('articlesCount').textContent = articles.length;
+      document.getElementById('videosCount').textContent = videos.length;
+      document.getElementById('usersCount').textContent = users.length;
+      document.getElementById('messagesCount').textContent = messages.length;
+    }
+    
+    function loadArticles() {
+      const articles = DataManager.getArticles();
+      const container = document.getElementById('articlesList');
+      if (articles.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 32px; color: var(--muted);">لا توجد مقالات</p>';
+        return;
+      }
+      
+      container.innerHTML = articles.map(article => `
+        <div class="card" style="padding: 20px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div style="flex: 1;">
+              <h3 style="margin: 0 0 8px; font-size: 20px;">${article.title}</h3>
+              <p style="margin: 0 0 8px; color: var(--muted);">${Utils.truncate(article.content, 150)}</p>
+              <div style="display: flex; gap: 16px; font-size: 14px; color: var(--muted);">
+                <span>${Utils.formatNumber(article.views)} مشاهدة</span>
+                <span>${Utils.formatNumber(article.likes)} إعجاب</span>
+                <span>${article.category}</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn" onclick="editArticle('${article.id}')">تعديل</button>
+              <button class="btn" onclick="deleteArticle('${article.id}')" style="color: #e74c3c;">حذف</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function loadVideos() {
+      const videos = DataManager.getVideos();
+      const container = document.getElementById('videosList');
+      if (videos.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 32px; color: var(--muted);">لا توجد فيديوهات</p>';
+        return;
+      }
+      
+      container.innerHTML = videos.map(video => `
+        <div class="card" style="padding: 20px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div style="flex: 1;">
+              <h3 style="margin: 0 0 8px; font-size: 20px;">${video.title}</h3>
+              <p style="margin: 0 0 8px; color: var(--muted);">${Utils.truncate(video.description, 150)}</p>
+              <div style="display: flex; gap: 16px; font-size: 14px; color: var(--muted);">
+                <span>${Utils.formatNumber(video.views)} مشاهدة</span>
+                <span>${Utils.formatNumber(video.likes)} إعجاب</span>
+                <span>${video.category}</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn" onclick="editVideo('${video.id}')">تعديل</button>
+              <button class="btn" onclick="deleteVideo('${video.id}')" style="color: #e74c3c;">حذف</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function loadMessages() {
+      const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      const container = document.getElementById('messagesList');
+      if (messages.length === 0) {
+        container.innerHTML = '<p style="text-align: center; padding: 32px; color: var(--muted);">لا توجد رسائل</p>';
+        return;
+      }
+      
+      container.innerHTML = messages.map((msg, index) => `
+        <div class="card" style="padding: 20px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+            <div>
+              <strong>${msg.name}</strong>
+              <span style="color: var(--muted); margin: 0 12px;">${msg.email}</span>
+              <span style="color: var(--muted); font-size: 14px;">${Utils.formatDate(msg.date)}</span>
+            </div>
+            <button class="btn" onclick="deleteMessage(${index})" style="color: #e74c3c;">حذف</button>
+          </div>
+          <h4 style="margin: 0 0 8px;">${msg.subject}</h4>
+          <p style="margin: 0; color: var(--text);">${msg.message}</p>
+        </div>
+      `).join('');
+    }
+    
+    function deleteArticle(id) {
+      if (confirm('هل أنت متأكد من حذف هذا المقال؟')) {
+        DataManager.deleteArticle(id);
+        loadArticles();
+        loadStats();
+        Utils.showMessage('تم حذف المقال بنجاح', 'success');
+      }
+    }
+    
+    function deleteVideo(id) {
+      if (confirm('هل أنت متأكد من حذف هذا الفيديو؟')) {
+        DataManager.deleteVideo(id);
+        loadVideos();
+        loadStats();
+        Utils.showMessage('تم حذف الفيديو بنجاح', 'success');
+      }
+    }
+    
+    function deleteMessage(index) {
+      if (confirm('هل أنت متأكد من حذف هذه الرسالة؟')) {
+        const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+        messages.splice(index, 1);
+        localStorage.setItem('contactMessages', JSON.stringify(messages));
+        loadMessages();
+        loadStats();
+        Utils.showMessage('تم حذف الرسالة بنجاح', 'success');
+      }
+    }
+    
+    function editArticle(id) {
+      Utils.showMessage('ميزة التعديل قيد التطوير', 'info');
+    }
+    
+    function editVideo(id) {
+      Utils.showMessage('ميزة التعديل قيد التطوير', 'info');
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+      loadArticles();
+      
+      // Navigation
+      document.querySelectorAll('.dashboard-nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.dashboard-nav a').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.dashboard-section').forEach(s => s.style.display = 'none');
+          link.classList.add('active');
+          const section = link.getAttribute('data-section');
+          document.getElementById(section + '-section').style.display = 'block';
+          
+          if (section === 'articles') loadArticles();
+          else if (section === 'videos') loadVideos();
+          else if (section === 'messages') loadMessages();
+        });
+      });
+      
+      document.getElementById('addArticleBtn').addEventListener('click', () => {
+        Utils.showMessage('ميزة إضافة مقال جديد قيد التطوير', 'info');
+      });
+      
+      document.getElementById('addVideoBtn').addEventListener('click', () => {
+        Utils.showMessage('ميزة إضافة فيديو جديد قيد التطوير', 'info');
+      });
+      
+      if (typeof Auth !== 'undefined') {
+        Auth.checkAuthState();
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) logoutBtn.addEventListener('click', () => Auth.logout());
+        const userName = document.querySelector('.user-name');
+        if (userName && Auth.currentUser) userName.textContent = Auth.currentUser.name;
+      }
+    });
+  </script>
+</body>
+</html>
+
